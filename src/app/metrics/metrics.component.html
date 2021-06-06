@@ -1,0 +1,49 @@
+<div style="margin:16px;">
+  <h2>Metrics</h2>
+  <mat-card>
+    <mat-grid-list *ngFor="let metric  of metricsData" cols="4" rowHeight="2:1" class="metric-group"
+      style="margin-bottom:40px">
+      <u>
+        <h4>{{metric.title}}</h4>
+      </u>
+      <mat-grid-tile>
+        <div class="metric-card">
+          <h5>total PnL LTD</h5>
+          <div class="metric-card-content">
+            <mat-icon class="icon" style="color: darkblue">paid</mat-icon>
+            <h1 class="value">{{metric.totalPnLLTD}}</h1>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="metric-card">
+          <h5>Drawdown YTD</h5>
+          <div class="metric-card-content">
+            <mat-icon class="icon" style="color: tomato">timeline</mat-icon>
+            <h1 class="value">{{metric.drawdownYTD}}</h1>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="metric-card">
+          <h5>pnl Daily</h5>
+          <div class="metric-card-content">
+            <mat-icon class="icon">savings</mat-icon>
+            <h1 class="value">{{metric.pnlDaily}}</h1>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="metric-card">
+          <h5>Price</h5>
+          <div class="metric-card-content">
+            <mat-icon class="icon" style="color: #d7327f">euro_symbol</mat-icon>
+            <h1 class="value">{{metric.price}}</h1>
+
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+  </mat-card>
+</div>
