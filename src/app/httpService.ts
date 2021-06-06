@@ -19,8 +19,9 @@ export class HttpService {
   }
 
   getHistory() {
-    const fromDate = moment(window.today).subtract(7, 'days').format('MM/DD/YYYY');
-    const toDate = moment(window.today).format('MM/DD/YYYY');
+    const todayDate = window.today || new Date();
+    const fromDate = moment(todayDate).subtract(7, 'days').format('MM/DD/YYYY');
+    const toDate = moment(todayDate).format('MM/DD/YYYY');
     return this.http.get(`${API_URL}/history?fromDate=${fromDate}&toDate=${toDate}&filterModel=&filtercommodity=`);
   }
 

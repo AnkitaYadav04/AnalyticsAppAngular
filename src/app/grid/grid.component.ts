@@ -1,6 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpService} from "../httpService";
+import { Component, OnInit } from '@angular/core';
+import { HttpService } from "../httpService";
 
+interface IHistory {
+  model: string;
+  commodity: string;
+  date: string;
+  newTradeAction: string;
+}
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -13,7 +19,7 @@ export class GridComponent implements OnInit {
     resizable: false,
   }
   columnDefs = [
-    {field: 'date', sortable: true, filter: false},
+    { field: 'date', sortable: true, filter: false },
     {
       field: 'model', sortable: true,
       filter: 'agSetColumnFilter',
@@ -23,19 +29,19 @@ export class GridComponent implements OnInit {
       sortable: true,
       filter: 'agSetColumnFilter',
     },
-    {field: 'newTradeAction', sortable: true, headerName: 'Tonnes/Lots'},
+    { field: 'newTradeAction', sortable: true, headerName: 'Tonnes/Lots' },
   ];
 
-  rowData = [];
+  rowData: IHistory[] = [];
 
   constructor(private httpService: HttpService) {
   }
 
   ngOnInit(): void {
     this.httpService.getHistory().subscribe((response: any) => {
-      const data: any = [];
+      const data: IHistory[] = [];
       response.forEach((commodity: any) => {
-        commodity.historyDetails.forEach((history: any) => {
+        commodity.historyDetails.forEach((history: { date: string; newTradeAction: string }) => {
           data.push({
             ...history,
             model: commodity.model,

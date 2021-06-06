@@ -2,7 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from "moment";
 import * as Highcharts from 'highcharts';
 import { HttpService } from "../httpService";
+interface ISeriesDataItem {
+  currentPosition: string;
+  newTradeAction: string;
+  pnlDaily: string;
+  price: string;
+  date: string;
+}
+interface IChartOptions {
+  xAxis: {
+    categories: string[];
+  };
+  title: { text: string };
+  series: any;
+}
+interface IChartData {
+  name: string;
+  data: string[];
+}
 
+interface ICommodity {
+  model: string;
+  commodity: string;
+  totalPnLLTD: number;
+  drawdownYTD: number;
+  details: [];
+}
 @Component({
   selector: 'app-high-chart',
   templateUrl: './high-chart.component.html',
@@ -10,7 +35,7 @@ import { HttpService } from "../httpService";
 })
 export class HighChartComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
-  chartOptions: any = [];
+  chartOptions: IChartOptions[] = [];
 
   constructor(private httpService: HttpService) {
   }
@@ -18,16 +43,16 @@ export class HighChartComponent implements OnInit {
   ngOnInit(): void {
     this.httpService.getAnalytics().subscribe((response: any) => {
       const charts: any = {};
-      response.forEach((commodity: any, index: number) => {
+      response.forEach((commodity: ICommodity) => {
         const chartName = `${commodity.model.trim()}_${commodity.commodity.trim()}`;
-        const chartData: any = [
+        const chartData: IChartData[] = [
           { name: 'Current Position', data: [] },
           { name: 'Trade Action', data: [] },
           { name: 'Daily PNL', data: [] },
           { name: 'price', data: [] },
         ]
         const chartLabels: string[] = [];
-        commodity.details.forEach((item: any) => {
+        commodity.details.forEach((item: ISeriesDataItem) => {
           chartLabels.push(moment(item.date).format('l').toString());
           chartData[0].data.push(item.currentPosition);
           chartData[1].data.push(item.newTradeAction);
